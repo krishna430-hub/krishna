@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Suspenseful Surprise!</title>
+    <style>
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at top left, #2d0036 0%, #1a0025 100%);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .suspense-container {
+            max-width: 700px;
+            margin: 100px auto 0 auto;
+            padding: 2.5rem 2rem;
+            background: rgba(40,0,60,0.36);
+            border-radius: 32px;
+            box-shadow: 0 6px 32px #a084e8a0, 0 2px 8px #fff2;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .suspense-title {
+            font-size: 2.3rem;
+            color: #e0aaff;
+            font-family: 'Pacifico', cursive, sans-serif;
+            margin-bottom: 1.7rem;
+            text-shadow: 0 2px 18px #a084e6cc, 0 2px 8px #fff7;
+        }
+        .tricky-text {
+            font-size: 1.3rem;
+            color: #ffe5ec;
+            margin-bottom: 2.2rem;
+            line-height: 1.6;
+            font-family: 'Segoe Script', 'Pacifico', cursive, sans-serif;
+            text-shadow: 0 1px 10px #e0aaff99;
+        }
+        .laugh-btn {
+            background: linear-gradient(45deg, #e0aaff, #b5179e);
+            color: white;
+            border: none;
+            padding: 16px 38px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 24px #a084e8a0;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 2rem;
+            position: relative;
+        }
+        .laugh-btn:hover {
+            background: linear-gradient(45deg, #b5179e, #e0aaff);
+            transform: scale(1.09) rotate(-2deg);
+        }
+        .moving-btn {
+            position: absolute;
+            left: 50%;
+            top: 70%;
+            transform: translate(-50%, -50%);
+            transition: left 0.2s, top 0.2s;
+        }
+        .laughter {
+            font-size: 2.2rem;
+            color: #ffd166;
+            margin-top: 2rem;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        .confetti-piece {
+            position: fixed;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 2rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="suspense-container">
+        <div class="suspense-title">A Suspenseful Surprise Awaits...</div>
+        <div class="tricky-text" id="trickyText">
+            One of these 5 buttons will unlock the laughter! Can you guess which one?
+        </div>
+        <div id="buttonChoices"></div>
+        <div class="laughter" id="laughterMsg">😂 Hahaha! Gotcha! 😂</div>
+        <button class="laugh-btn" id="nextBtn" style="display:none;margin-top:2.5rem;">Next &rarr;</button>
+    </div>
+    <script>
+        // 5 buttons: Button 3 is correct, others show romantic/suspense sentences
+        const laughterMsg = document.getElementById('laughterMsg');
+        const nextBtn = document.getElementById('nextBtn');
+        const buttonChoices = document.getElementById('buttonChoices');
+        const messages = [
+            "Button 1: 'Love is the greatest adventure, and you’re my favorite mystery.'",
+            "Button 2: 'Roses are red, violets are blue, this button is sweet, but not for you!'",
+            // Button 3 is correct
+            "Button 4: 'Every love story is beautiful, but ours is my favorite. 💖'",
+            "Button 5: 'Suspense is in the air... but the right button is elsewhere!'"
+        ];
+        for(let i=1; i<=5; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'laugh-btn';
+            btn.textContent = `Button ${i}`;
+            btn.style.margin = '8px';
+            if(i === 3) {
+                btn.onclick = function() {
+                    laughterMsg.style.opacity = 1;
+                    buttonChoices.style.display = 'none';
+                    setTimeout(() => {
+                        for(let j=0;j<30;j++) createConfetti();
+                    }, 200);
+                    setTimeout(() => {
+                        nextBtn.style.display = 'inline-block';
+                        setTimeout(() => {
+                            window.location.href = 'next.html';
+                        }, 2000);
+                    }, 1200);
+                };
+            } else {
+                btn.onclick = function() {
+                    alert(messages[i < 3 ? i - 1 : i - 2]);
+                };
+            }
+            buttonChoices.appendChild(btn);
+        }
+        nextBtn.onclick = function() {
+            window.location.href = 'next.html';
+        };
+        // Confetti animation for laughter
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti-piece';
+            confetti.innerHTML = ['','','','',''][Math.floor(Math.random()*5)];
+            confetti.style.left = Math.random()*100 + 'vw';
+            confetti.style.top = '-40px';
+            confetti.style.color = ['#ffd166','#e0aaff','#b5179e','#f72585','#ffe5ec'][Math.floor(Math.random()*5)];
+            confetti.style.fontSize = (Math.random()*1.2+1.2)+'rem';
+            confetti.style.transition = 'top 2.5s linear, opacity 2.5s linear';
+            document.body.appendChild(confetti);
+            setTimeout(()=>{
+                confetti.style.top = '100vh';
+                confetti.style.opacity = 0;
+            }, 50);
+            setTimeout(()=>{
+                confetti.remove();
+            }, 2600);
+        }
+    </script>
+</body>
+</html>

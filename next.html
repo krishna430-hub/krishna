@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #ffb6e6 0%, #ffe5ec 50%, #c3a3ff 100%);
+            overflow-x: hidden;
+            animation: romanticBg 12s ease-in-out infinite alternate;
+            position: relative;
+        }
+        @keyframes romanticBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .heart {
+            position: fixed;
+            bottom: -60px;
+            font-size: 2.2rem;
+            color: #ff69b4;
+            animation: floatHeart 6s linear infinite;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.7;
+            }
+            60% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+        .page-content {
+            max-width: 800px;
+            margin: 80px auto 0 auto;
+            padding: 2.5rem 2rem;
+            background: rgba(255,255,255,0.22);
+            border-radius: 30px;
+            box-shadow: 0 8px 40px #ffb6e6a0, 0 2px 8px #a084e8a0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .romantic-para {
+            font-size: 1.4rem;
+            color: #b85fc6;
+            margin: 2.5rem 0 1.5rem 0;
+            line-height: 1.7;
+            font-family: 'Segoe Script', 'Pacifico', cursive, sans-serif;
+            text-shadow: 0 1px 10px #ffe5ec90;
+        }
+        .romantic-title {
+            font-family: 'Pacifico', cursive, sans-serif;
+            color: #ff69b4;
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 2px 18px #ffb6e6cc, 0 2px 8px #fff7;
+        }
+        .next-btn-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff69b4;
+            color: #fff;
+            cursor: pointer;
+        }
+        .bg-love-text {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.13;
+            font-size: 0.95rem;
+            font-family: 'Segoe Script', 'Pacifico', cursive, sans-serif;
+            color: #b85fc6;
+            white-space: pre;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-love-text" id="bgLoveText"></div>
+    <div class="page-content">
+        <div class="romantic-title">To My Beautiful Wife</div>
+        <p class="romantic-para">
+            Every moment with you is a precious memory, every smile a melody in my heart. Your love colors my world with warmth and magic, and your kindness makes every day brighter. Thank you for being my partner, my best friend, and the love of my life. I am endlessly grateful for you, and I look forward to a lifetime of laughter, adventures, and romance together. You are my forever, my always, my everything. 💖
+        </p>
+    </div>
+    <!-- Removed the Next button -->
+    <script>
+        // Floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 1.5 + 1.2) + 'rem';
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 700);
+        function goToSurprise() {
+            window.location.href = 'surprise.html';
+        }
+        // Fill background with repeated love sentences
+        function fillLoveBackground() {
+            const sentences = [
+                "I love you", "You are my sunshine", "Forever & always", "You complete me", "My heart is yours", "Lovely moments", "Endless love", "Sweetheart", "My everything", "You make me smile"
+            ];
+            let text = '';
+            for (let row = 0; row < 30; row++) {
+                for (let col = 0; col < 18; col++) {
+                    text += sentences[(row * 7 + col) % sentences.length] + '   ';
+                }
+                text += '\n';
+            }
+            document.getElementById('bgLoveText').textContent = text;
+        }
+        fillLoveBackground();
+    </script>
+</body>
+</html>
